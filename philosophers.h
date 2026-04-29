@@ -6,7 +6,7 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:56:04 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/25 15:44:00 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:45:19 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include	<sys/time.h>
 #include	<limits.h>
 
+# define	PHILO_MAX 200
 
 typedef struct s_table t_table;
 
@@ -38,10 +39,10 @@ typedef struct s_philo
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_t		thread_id;
-	struct s_table	*table;
+	t_table			*table;
 }	t_philo;
 
-struct s_table
+typedef struct s_table
 {
 	long			philo_nbr;
 	long			time_to_die;
@@ -58,8 +59,19 @@ struct s_table
 
 //utils
 void	error_exit(const char *error);
-ong	ft_atol(char *str);
+long	ft_atol(char *str);
+void	clean(t_table *table);
+long	get_time(void);//converte segundos para milisegundos e microsegundos para milisegundo e soma os dois
 //parse
-int	parse_input(t_table *table, char **argv);
+int	parse_input(char **argv);
+//init
+void	data_init(t_table *table, char **argv);
+void	init_forks(t_table *table);
+void	init_philos(t_table *table);
+//dinner
+void	dinner_start(t_table *table);
+//actions
+void	ft_usleep(long ms, t_table *table);
+void	print_state(t_philo *philo, char *state);
 
 #endif

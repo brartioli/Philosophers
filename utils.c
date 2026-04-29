@@ -6,15 +6,28 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 19:36:19 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/25 15:06:49 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:27:19 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+static size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len])
+	{
+		len++;
+	}
+	return (len);
+}
+
 void	error_exit(const char *error)
 {
-	ft_printf("%s\n, error");
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 	exit(EXIT_FAILURE);
 }
 
@@ -33,4 +46,20 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (result);
+}
+
+void	clean(t_table *table)
+{
+	if (table->forks)
+		free(table->forks);
+	if (table->philos)
+		free(table->philos);
+}
+
+long	get_time(void)
+{
+	struct timeval	tv;
+	
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_sec / 1000));
 }

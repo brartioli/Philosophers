@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/13 17:46:46 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/29 20:08:50 by bfernan2         ###   ########.fr       */
+/*   Created: 2026/04/29 20:37:51 by bfernan2          #+#    #+#             */
+/*   Updated: 2026/04/29 20:44:47 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	main(int argc, char **argv)
+void	print_state(t_philo *philo, char *state)
 {
-	t_table	table;
-		
-	if (argc != 5 && argc != 6)
-		return(printf("Error: Wrong argument count\n"), 1);
-	if(parse_input(argv) != 0)
-		return (1);
-	data_init(&table, argv);
-	//dinner_start
-	clean(&table);
-	return (0);
+	pthread_mutex_lock(&philo->table->write_mutex);
+	printf("%ld %d %s\n", get_time() - philo->table->start_simulation,
+		philo->id, state);
+	pthread_mutex_unlock(&philo->table->write_mutex);
+}
+
+void	ft_usleep(long ms, t_table *table)
+{
+	long	start;
+
+	start = get_time();
+	while (get_time() - start < ms)
+	{
+		if (table->end_simulation)
+			break ;
+		usleep(500);
+	}
 }

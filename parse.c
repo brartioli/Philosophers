@@ -6,7 +6,7 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:33:02 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/25 15:35:44 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/04/29 18:17:38 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ static int	is_number_arg(char *str)
 
 	i = 0;
 	if (!str || str[0] == '\0')
-		return (0);
+		return (1);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1)
+	return (0);
 }
 
-int	parse_input(t_table *table, char **argv)
+int	parse_input(char **argv)
 {
-	if (is_number_arg(argv[1]) || ft_atol(argv[1]) <= 0)
+	if (is_number_arg(argv[1]) || ft_atol(argv[1]) <= 0 ||
+			ft_atol(argv[1]) > PHILO_MAX)
 		return (write(2, "Error: Invalid number of philosophers\n", 38), 1);
 	if (is_number_arg(argv[2]) || ft_atol(argv[2]) <= 0)
 		return (write(2, "Error: Invalid time to die\n", 27), 1);
