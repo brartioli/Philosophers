@@ -6,32 +6,32 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:56:04 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/29 20:45:19 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/04/29 20:51:12 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include	<stdio.h>
-#include 	<stdlib.h>
-#include	<unistd.h>
-#include	<stdbool.h>
-#include	<pthread.h>
-#include	<sys/time.h>
-#include	<limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdbool.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <limits.h>
 
-# define	PHILO_MAX 200
+# define PHILO_MAX 200
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
-typedef struct s_fork
+typedef struct	s_fork
 {
 	pthread_mutex_t	fork;
 	int				fork_id;
 }	t_fork;
 
-typedef struct s_philo
+typedef struct	s_philo
 {
 	int				id;
 	long			meals_counter;
@@ -42,7 +42,7 @@ typedef struct s_philo
 	t_table			*table;
 }	t_philo;
 
-typedef struct s_table
+typedef struct	s_table
 {
 	long			philo_nbr;
 	long			time_to_die;
