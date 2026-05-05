@@ -6,7 +6,7 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:56:04 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/29 20:51:12 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:35:46 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_table
 	long			nbr_limit_meals;
 	long			start_simulation;
 	bool			end_simulation;
+	//armazenar start_time (current_time - start_time Philo is ...)
 	pthread_mutex_t	write_mutex;//protege saída (printf)
 	pthread_mutex_t	state_mutex;//protege dados compartilhados (end_simulation, etc)
 	t_fork	*forks;
@@ -61,8 +62,7 @@ typedef struct	s_table
 void	error_exit(const char *error);
 long	ft_atol(char *str);
 void	clean(t_table *table);
-long	get_time(void);//converte segundos para milisegundos e microsegundos para milisegundo e soma os dois
-//parse
+long	get_time(void);
 int	parse_input(char **argv);
 //init
 void	data_init(t_table *table, char **argv);
@@ -73,5 +73,8 @@ void	dinner_start(t_table *table);
 //actions
 void	ft_usleep(long ms, t_table *table);
 void	print_state(t_philo *philo, char *state);
+void	eat(t_philo *philo);
+void	sleep_philo(t_philo *philo);
+void	think(t_philo *philo);
 
 #endif

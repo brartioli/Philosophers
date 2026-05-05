@@ -6,7 +6,7 @@
 /*   By: bfernan2 <bfernan2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/29 19:32:41 by bfernan2          #+#    #+#             */
-/*   Updated: 2026/04/29 20:35:06 by bfernan2         ###   ########.fr       */
+/*   Updated: 2026/05/05 18:15:15 by bfernan2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,29 @@ static void	*philo_routine(void *arg)
 	return (NULL);
 }
 
+static void	init_mutex(t_table *table)
+{
+	if (pthread_mutex_init(&table->write_mutex, NULL) != 0)
+	{
+		clean(table);
+		error_exit("Failed to init write mutex\n");
+	}
+	if (pthread_mutex_init(&table->state_mutex, NULL) != 0)
+	{
+		clean(table);
+		error_exit("Failed to init state mutex\n");
+	}
+}
+
 void	dinner_start(t_table *table)
 {
 	int	i;
+	pthread_t	monitor;
 
 	init_forks(table);
 	init_philos(table);
+	init_mutex(table);
+	table->start_simulation = get_time();
 	i = 0;
 	while (i < table->philo_nbr)
 	{
@@ -44,6 +61,10 @@ void	dinner_start(t_table *table)
 		}
 		i++;
 	}
-	//monitor
+	if (pthread_create(&monitor, NULL, monitor_routine, table) != 0)
+	{
+		clean(table);
+		error_exit("Failed to create monitor thread/n");
+	}
 	//join
 }
